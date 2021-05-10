@@ -1,0 +1,1 @@
+HST Cloud Servis ve HST Core ile veri alışverişlerinizi bu dosyadan yapınız.
