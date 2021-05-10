@@ -119,7 +119,7 @@ export default Vue.extend({
   <q-page class="flex flex-center">
     <img
       alt="Quasar logo"
-      src="~assets/quasar-logo-full.svg"
+      src="~assets/logo.png"
     >
   </q-page>
 </template>
