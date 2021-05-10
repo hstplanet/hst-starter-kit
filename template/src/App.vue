@@ -25,5 +25,3 @@ export default {
 }
 </script>
 {{/if}}
-
-<style lang="scss"></style>
