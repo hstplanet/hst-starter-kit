@@ -10,25 +10,25 @@ const lintStyles = ['standard', 'airbnb', 'prettier']
  * @param {object} data Data from questionnaire
  */
 function sortDependencies(data) {
-  const pkgFile = path.join(
-    data.inPlace ? '' : data.destDirName,
-    'package.json'
-  )
-  let sorted = false
-  const pkg = JSON.parse(fs.readFileSync(pkgFile))
+    const pkgFile = path.join(
+        data.inPlace ? '' : data.destDirName,
+        'package.json'
+    )
+    let sorted = false
+    const pkg = JSON.parse(fs.readFileSync(pkgFile))
 
-  if (pkg.dependencies) {
-    sorted = true
-    pkg.dependencies = sortObject(pkg.dependencies)
-  }
-  if (pkg.devDependencies) {
-    sorted = true
-    pkg.devDependencies = sortObject(pkg.devDependencies)
-  }
+    if (pkg.dependencies) {
+        sorted = true
+        pkg.dependencies = sortObject(pkg.dependencies)
+    }
+    if (pkg.devDependencies) {
+        sorted = true
+        pkg.devDependencies = sortObject(pkg.devDependencies)
+    }
 
-  if (sorted) {
-    fs.writeFileSync(pkgFile, JSON.stringify(pkg, null, 2) + '\n')
-  }
+    if (sorted) {
+        fs.writeFileSync(pkgFile, JSON.stringify(pkg, null, 2) + '\n')
+    }
 }
 
 /**
@@ -37,8 +37,8 @@ function sortDependencies(data) {
  * @param {object} data Data from questionnaire
  */
 function installDependencies(cwd, executable = 'npm', color) {
-  console.log(`\n\n ${color('[*] Installing project dependencies ...')}\n`)
-  return runCommand(executable, ['install'], { cwd })
+    console.log(`\n\n ${color('[*] Installing project dependencies ...')}\n`)
+    return runCommand(executable, ['install'], { cwd })
 }
 
 /**
@@ -47,21 +47,19 @@ function installDependencies(cwd, executable = 'npm', color) {
  * @param {object} data Data from questionnaire
  */
 function runLintFix(cwd, data, color) {
-  if (data.preset.lint && lintStyles.indexOf(data.lintConfig) !== -1) {
-    console.log(
-      `\n\n ${color(
+    if (data.preset.lint && lintStyles.indexOf(data.lintConfig) !== -1) {
+        console.log(
+            `\n\n ${color(
         '[*] Running eslint --fix to comply with chosen preset rules...'
       )}\n\n`
-    )
-    const args =
-      data.autoInstall === 'npm'
-        ? ['run', 'lint', '--', '--fix']
-        : ['run', 'lint', '--fix']
-    return runCommand(data.autoInstall, args, {
-      cwd,
-    })
-  }
-  return Promise.resolve()
+        )
+        const args =
+            data.autoInstall === 'npm' ? ['run', 'lint', '--', '--fix'] : ['run', 'lint', '--fix']
+        return runCommand(data.autoInstall, args, {
+            cwd,
+        })
+    }
+    return Promise.resolve()
 }
 
 /**
@@ -70,11 +68,11 @@ function runLintFix(cwd, data, color) {
  * @param {Object} data Data from questionnaire.
  */
 function lintMsg(data) {
-  return !data.autoInstall &&
-    data.lint &&
-    lintStyles.indexOf(data.lintConfig) !== -1
-    ? 'npm run lint -- --fix (or for yarn: yarn run lint --fix)\n  '
-    : ''
+    return !data.autoInstall &&
+        data.lint &&
+        lintStyles.indexOf(data.lintConfig) !== -1 ?
+        'npm run lint -- --fix (or for yarn: yarn run lint --fix)\n  ' :
+        ''
 }
 
 /**
@@ -82,29 +80,26 @@ function lintMsg(data) {
  * @param {Object} data Data from questionnaire.
  */
 function printMessage(data, { green, yellow }) {
-  const message = `
- ${green('[*] Quasar Project initialization finished!')}
+    const message = `
+ ${green('[*] HST Project initialization finished!')}
 
 To get started:
 
   ${yellow(
     `${data.inPlace ? '' : `cd ${data.destDirName}\n  `}${installMsg(
       data
-    )}${lintMsg(data)}quasar dev`
+    )}${lintMsg(data)}hstcore dev || npm run dev`
   )}
 
-Documentation can be found at: https://quasar.dev
+Documentation can be found at: https://hstplanet.com
 
-Quasar is relying on donations to evolve. We'd be very grateful if you can
-read our manifest on "Why donations are important": https://quasar.dev/why-donate
-Donation campaign: https://donate.quasar.dev
+HST is relying on donations to evolve. We'd be very grateful if you can
+read our manifest on "Why donations are important": https://hstplanet.com/why-donate
+Donation campaign: https://donate.hstplanet.com
 Any amount is very welcomed.
-If invoices are required, please first contact razvan@quasar.dev
+If invoices are required, please first contact info@hstplanet.com
 
-Please give us a star on Github if you appreciate our work:
-https://github.com/quasarframework/quasar
-
-Enjoy! - Quasar Team
+Enjoy! - HST Team
 `
   console.log(message)
 }
