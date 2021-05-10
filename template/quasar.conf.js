@@ -132,12 +132,6 @@
                                                                                     },
                                                                                     {
                                                                                         { /preset.lint}}{{/preset.typescript } }
-                                                                                    extendWebpack(cfg, { isServer, isClient }) {
-                                                                                        cfg.resolve.alias = {
-                                                                                            ...cfg.resolve.alias,
-                                                                                            models: path.resolve(__dirname, './src/models'),
-                                                                                        }
-                                                                                    }
                                                                                 },
 
                                                                                 // Full list of options: https://v1.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
@@ -263,5 +257,4 @@
                                                                             }
                                                                         } {
                                                                             {# preset.typescript } }); {
-                                                                            {
-                                                                                /preset.typescript}}
+                                                                            { /preset.typescript}}
