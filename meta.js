@@ -192,7 +192,7 @@ module.exports = {
         'src/store/**/*.js': 'preset.vuex && !preset.typescript',
 
         // HST Core
-        'hst-config.json': 'hstcore',
+        '.hst-config.json': 'hstcore',
 
         // TypeScript files
         '.prettierrc': `preset.lint && preset.typescript && lintConfig === 'prettier'`,
