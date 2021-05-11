@@ -1,7 +1,16 @@
 export default class Model {
 
-    deneme() {
 
-    }
+    constructor() {}
+
+    attribute = []
+
+    getModel() {}
+
+    save() {}
+
+    update() {}
+
+    delete() {}
 
 }
