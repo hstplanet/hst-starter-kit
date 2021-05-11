@@ -205,11 +205,10 @@ module.exports = {
         'src/store/**/*.js': 'preset.vuex && !preset.typescript',
 
         // HST Core
-        '.hst-config.json': 'hstcore === true',
+        '.hst-config.json': 'hstcore.value',
 
         // Loging
         'src/layouts/LoginLayout.vue': 'login.value',
-        'src/layouts/LoginLayout.vue': 'login',
 
         // TypeScript files
         '.prettierrc': `preset.lint && preset.typescript && lintConfig === 'prettier'`,
