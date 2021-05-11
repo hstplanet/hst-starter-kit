@@ -107,7 +107,7 @@ module.exports = {
             type: 'select',
             message: 'Check the add HSTCore to your project:',
             name: 'hstcore',
-            initial: true
+            initial: false
         },
 
         typescriptConfig: {
