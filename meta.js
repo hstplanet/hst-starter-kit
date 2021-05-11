@@ -205,7 +205,7 @@ module.exports = {
         'src/store/**/*.js': 'preset.vuex && !preset.typescript',
 
         // HST Core
-        '.hst-config.json': 'hstcore.value',
+        'hst-config.json': 'hstcore.value',
 
         // Loging
         'src/layouts/LoginLayout.vue': 'login.value',
