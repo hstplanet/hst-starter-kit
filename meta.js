@@ -106,7 +106,7 @@ module.exports = {
         hstcore: {
             type: 'list',
             message: 'Add HSTCore this project :',
-            default: false,
+            default: true,
             choices: [
                 { name: 'Add Project', value: true },
                 { name: 'Not Add', value: false },
