@@ -103,6 +103,13 @@ module.exports = {
             ]
         },
 
+        hstcore: {
+            type: 'select',
+            message: 'Check the add HSTCore to your project:',
+            name: 'hstcore',
+            initial: true
+        },
+
         typescriptConfig: {
             when: 'preset.typescript',
             type: 'list',
@@ -183,6 +190,9 @@ module.exports = {
         'src/boot/i18n.js': 'preset.i18n && !preset.typescript',
         'src/i18n/**/*.js': 'preset.i18n && !preset.typescript',
         'src/store/**/*.js': 'preset.vuex && !preset.typescript',
+
+        // HST Core
+        'hst-config.json': 'hstcore',
 
         // TypeScript files
         '.prettierrc': `preset.lint && preset.typescript && lintConfig === 'prettier'`,
