@@ -113,6 +113,16 @@ module.exports = {
             ],
         },
 
+        login: {
+            type: 'list',
+            message: 'Add this project login system :',
+            default: false,
+            choices: [
+                { name: 'Add Project', value: true },
+                { name: 'Not Add', value: false },
+            ],
+        },
+
         typescriptConfig: {
             when: 'preset.typescript',
             type: 'list',
@@ -196,6 +206,10 @@ module.exports = {
 
         // HST Core
         '.hst-config.json': 'hstcore === true',
+
+        // Loging
+        'src/layouts/LoginLayout.vue': 'login.value',
+        'src/layouts/LoginLayout.vue': 'login',
 
         // TypeScript files
         '.prettierrc': `preset.lint && preset.typescript && lintConfig === 'prettier'`,
