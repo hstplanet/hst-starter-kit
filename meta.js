@@ -105,9 +105,13 @@ module.exports = {
 
         hstcore: {
             type: 'select',
-            message: 'Check the add HSTCore to your project:',
-            name: 'hstcore',
-            initial: false
+            name: 'value',
+            message: 'Pick a color',
+            choices: [
+                { title: 'Add Project', value: true },
+                { title: 'Not Add', value: false },
+            ],
+            initial: 1
         },
 
         typescriptConfig: {
