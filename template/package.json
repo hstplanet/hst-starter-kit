@@ -20,8 +20,7 @@
     {{#preset.axios}}"axios": "^0.21.1",{{/preset.axios}}
     {{#preset.i18n}}"vue-i18n": "^8.0.0",{{/preset.i18n}}
 	{{#preset.hstcore}}
-    "hstcore": "^1.0.3",
-    "firebase": "^8.5.0",
+    "hstcloud": "^1.0.0",
       {{/preset.hstcore}}
     "@quasar/extras": "^1.0.0",
     "core-js": "^3.6.5",
