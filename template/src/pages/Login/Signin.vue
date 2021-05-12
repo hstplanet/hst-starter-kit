@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center">
-    <q-form @submit="signin">
-      <q-card class="login">
+    <q-form @submit="signin" class="login">
+      <q-card>
         <q-card-section class="bg-white">
           <img src="~/assets/logo.png" height="42px" alt="logo" />
         </q-card-section>
@@ -62,5 +62,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss"></style>

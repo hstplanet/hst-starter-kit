@@ -17,7 +17,7 @@
 export default {};
 </script>
 
-<style>
+<style lang="scss">
 .bg-img {
   background-image: linear-gradient(
     to left,
@@ -34,5 +34,27 @@ export default {};
     #dde1eb,
     #d9e3ea
   );
+}
+
+.login {
+  width: 30%;
+  a{
+    color: $grey-8;
+    &:hover {
+      color: $red;
+    }
+  }
+}
+
+@media screen and (max-width: 1366px) {
+  .login {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .login {
+    width: 90%;
+  }
 }
 </style>
