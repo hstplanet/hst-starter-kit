@@ -35,15 +35,7 @@ class Auth {
     signInWithEmailAndPassword(email, password) {
         return new Promise((resolve, reject) => {
             firebase.auth().signInWithEmailAndPassword(email, password).then(user => {
-                hst.store().collection("users").where("uid", "=", user.user.uid).get().then(res => {
-                    var data = {
-                        firebase: user,
-                        hst: res[0]
-                    }
-                    resolve(data);
-                }).catch(err => {
-                    reject(err);
-                });
+                resolve(user)
             }).catch(err => {
                 reject(err);
                 if (boot.auth.errorNotify) {

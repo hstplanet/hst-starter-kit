@@ -193,8 +193,10 @@ module.exports = {
         'hst.conf.js': 'preset.hstcore',
         'src/boot/Core/**/*.js': 'preset.hstcore',
 
+
         // Loging
         'src/layouts/LoginLayout.vue': 'preset.loginsystem',
+        'src/pages/Login/**/*.vue': 'preset.loginsystem',
 
         // TypeScript files
         '.prettierrc': `preset.lint && preset.typescript && lintConfig === 'prettier'`,
