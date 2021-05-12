@@ -93,34 +93,19 @@ module.exports = {
                     value: 'axios'
                 },
                 {
+                    name: 'HSTCore',
+                    value: 'hstcore'
+                },
+                {
+                    name: 'Login System',
+                    value: 'loginsystem'
+                },
+                {
                     name: 'Vue-i18n',
                     value: 'i18n'
                 },
-                {
-                    name: 'IE11 support',
-                    value: 'ie'
-                }
+
             ]
-        },
-
-        hstcore: {
-            type: 'list',
-            message: 'Add HSTCore this project :',
-            default: true,
-            choices: [
-                { name: 'Add Project', value: true },
-                { name: 'Not Add', value: false },
-            ],
-        },
-
-        login: {
-            type: 'list',
-            message: 'Add this project login system :',
-            default: false,
-            choices: [
-                { name: 'Add Project', value: true },
-                { name: 'Not Add', value: false },
-            ],
         },
 
         typescriptConfig: {
@@ -205,10 +190,10 @@ module.exports = {
         'src/store/**/*.js': 'preset.vuex && !preset.typescript',
 
         // HST Core
-        'hst-config.json': 'hstcore.value',
+        'hst-config.json': 'preset.hstcore',
 
         // Loging
-        'src/layouts/LoginLayout.vue': 'login.value',
+        'src/layouts/LoginLayout.vue': 'preset.loginsystem',
 
         // TypeScript files
         '.prettierrc': `preset.lint && preset.typescript && lintConfig === 'prettier'`,
