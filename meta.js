@@ -191,6 +191,7 @@ module.exports = {
 
         // HST Core
         'hst.conf.js': 'preset.hstcore',
+        'boot/Core/**/*.js': 'preset.hstcore',
 
         // Loging
         'src/layouts/LoginLayout.vue': 'preset.loginsystem',
