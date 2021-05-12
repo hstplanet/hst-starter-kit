@@ -1,14 +1,52 @@
+import hst from 'boot/Core'
+
 const routes = [{
         path: '/',
         component: () =>
             import ('layouts/MainLayout.vue'),
-        children: [{
-            path: '',
-            component: () =>
-                import ('pages/Index.vue')
-        }]
+        children: [
+            // İndex
+            {
+                path: '',
+                component: () =>
+                    import ('pages/Index.vue')
+            },
+            // Mail Verified
+            {
+                beforeEnter: (to, from, next) => {
+                    hst.auth().onAuthStateChanged().then((res) => {
+                        if (!res.firebase.emailVerified) {
+                            next();
+                        }
+                        next("/");
+                    }).catch(err => {
+                        next("/");
+                    });
+                },
+                path: 'mailverified',
+                component: () =>
+                    import ('pages/Login/emailVerified.vue'),
+            },
+            // Mail Verified OK
+            {
+                beforeEnter: (to, from, next) => {
+                    hst.auth().onAuthStateChanged().then((res) => {
+                        if (res.firebase.emailVerified) {
+                            next();
+                        }
+                        next("/");
+                    }).catch(err => {
+                        next("/");
+                    });
+                },
+                path: 'mailverifiedok',
+                component: () =>
+                    import ('src/pages/Login/OkeMail.vue')
+            },
+        ]
     },
-
+	
+	{{#preset.loginsystem}}
     // Login
     {
         path: '/login',
@@ -29,6 +67,7 @@ const routes = [{
             },
         ]
     },
+{{/preset.loginsystem}}
 
     // Always leave this as last one,
     // but you can also remove it
