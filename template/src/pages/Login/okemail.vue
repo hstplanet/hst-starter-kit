@@ -7,11 +7,9 @@
 </template>
 
 <script>
-import Auth from "boot/Auth";
 export default {
   data() {
     return {
-      auth: new Auth(),
       view: false,
     };
   },
