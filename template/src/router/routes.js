@@ -11,6 +11,7 @@ const routes = [{
                 component: () =>
                     import ('pages/Index.vue')
             },
+		{{#preset.loginsystem}}
             // Mail Verified
             {
                 beforeEnter: (to, from, next) => {
@@ -43,6 +44,7 @@ const routes = [{
                 component: () =>
                     import ('src/pages/Login/OkeMail.vue')
             },
+{{/preset.loginsystem}}
         ]
     },
 	
