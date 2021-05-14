@@ -8,8 +8,8 @@
   "scripts": {
     {{#preset.lint}}"lint": "eslint --ext .js,{{#preset.typescript}}.ts,{{/preset.typescript}}.vue ./",{{/preset.lint}}
     "test": "echo \"No test specified\" && exit 0",
-    "dev" : "quasar dev",
-    "build" : "quasar build"
+    "dev" : "hst dev",
+    "build" : "hst build"
   },
   "dependencies": {
     {{#if_eq typescriptConfig "composition"}}"@vue/composition-api": "^1.0.0-rc.3",{{/if_eq}}
