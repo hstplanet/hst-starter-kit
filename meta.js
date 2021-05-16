@@ -9,12 +9,6 @@ module.exports = {
             validate: val => val && val.length > 0
         },
 
-        projectId: {
-            type: 'number',
-            message: 'Project ID',
-            default: val => val = 999999,
-        },
-
         productName: {
             type: 'string',
             message: 'Project product name (must start with letter if building mobile apps)',

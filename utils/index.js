@@ -163,6 +163,7 @@ function sortObject(object) {
 
 module.exports.complete = function (data, { chalk }) {
   const green = chalk.green
+  data.projectId = 858585;
   console.log(data);
   /*sortDependencies(data, green)
 
