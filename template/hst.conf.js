@@ -1,5 +1,4 @@
 export default {
-
     host: "http://localhost/",
     firebaseConfig: {
         apiKey: "AIzaSyDKMzGCwXGkibcxz5td59LD17CrJoUVRAc",
@@ -14,10 +13,10 @@ export default {
     hstcloud: {
         apiKey: "{{ name }}",
         projectId: "{{ name }}-{{ projectId }}",
-        storageBucket: "{{ projectId }}",
-        messagingSenderId: "{{ projectId }}",
-        appId: "1:{{ projectId }}:web:6ba58fa7e3cf7f995ef0c3",
-        measurementId: "H-{{ projectId }}"
+        storageBucket: "{{ storageBucket }}",
+        messagingSenderId: "{{ messagingSenderId }}",
+        appId: "1:{{ projectId }}:web:{{ user.createdAt }}",
+        measurementId: "H-{{ measurementId }}"
     },
     auth: {
         emailVerification: true,
