@@ -13,11 +13,11 @@ export default {
     },
     hstcloud: {
         apiKey: "{{ name }}",
-        projectId: "{{ name }}-164c3",
-        storageBucket: "",
-        messagingSenderId: "678488584058",
-        appId: "1:678488584058:web:6ba58fa7e3cf7f995ef0c3",
-        measurementId: "H-2FE53R01TK"
+        projectId: "{{ name }}-{{ projectId }}",
+        storageBucket: "{{ projectId }}",
+        messagingSenderId: "{{ projectId }}",
+        appId: "1:{{ projectId }}:web:6ba58fa7e3cf7f995ef0c3",
+        measurementId: "H-{{ projectId }}"
     },
     auth: {
         emailVerification: true,

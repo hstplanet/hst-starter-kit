@@ -12,7 +12,7 @@ module.exports = {
         projectId: {
             type: 'number',
             message: 'Project ID',
-            default: val => val = 5456464,
+            default: val => val = 999999,
         },
 
         productName: {

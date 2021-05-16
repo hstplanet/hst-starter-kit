@@ -163,8 +163,8 @@ function sortObject(object) {
 
 module.exports.complete = function (data, { chalk }) {
   const green = chalk.green
-
-  sortDependencies(data, green)
+  console.log(data);
+  /*sortDependencies(data, green)
 
   const cwd = path.join(process.cwd(), data.inPlace ? '' : data.destDirName)
 
@@ -182,5 +182,5 @@ module.exports.complete = function (data, { chalk }) {
   }
   else {
     printMessage(data, chalk)
-  }
+  }*/
 }
