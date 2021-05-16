@@ -11,6 +11,14 @@ export default {
         appId: "1:678488584058:web:6ba58fa7e3cf7f995ef0c3",
         measurementId: "G-2FE53R01TK"
     },
+    hstcloud: {
+        apiKey: "{{ name }}",
+        projectId: "{{ name }}-164c3",
+        storageBucket: "",
+        messagingSenderId: "678488584058",
+        appId: "1:678488584058:web:6ba58fa7e3cf7f995ef0c3",
+        measurementId: "H-2FE53R01TK"
+    },
     auth: {
         emailVerification: true,
         emailVerificationURL: "/mailverified",
@@ -20,6 +28,4 @@ export default {
         },
         errorNotify: true
     }
-
-
 }
