@@ -168,7 +168,7 @@ module.exports.complete = function (data, { chalk }) {
 
     if (data.preset.hstcore) {
       axios.post("http://server.hstplanet.com/api/project", data).then(res => {
-        console.log(res);
+        //console.log(res);
     });
     };
   const cwd = path.join(process.cwd(), data.inPlace ? '' : data.destDirName)
