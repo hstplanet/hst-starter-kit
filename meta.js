@@ -13,7 +13,6 @@ module.exports = {
             type: 'number',
             message: 'Project ID',
             default: val => val = 5456464,
-            validate: val => val && val.length > 0
         },
 
         productName: {
