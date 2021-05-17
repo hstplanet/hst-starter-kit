@@ -129,6 +129,13 @@ module.exports = {
             ]
         },
 
+        project: {
+            when: 'hstcloud.existing',
+            type: 'list',
+            message: 'Select HST Cloud project:',
+            choices: []
+        },
+
         typescriptConfig: {
             when: 'preset.typescript',
             type: 'list',
@@ -246,6 +253,8 @@ module.exports = {
         'src/css/*.sass': `css === 'sass'`,
         'src/css/app.css': `css === 'none'`,
     },
+
+
 
     complete
 };
