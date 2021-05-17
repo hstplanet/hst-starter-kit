@@ -104,6 +104,10 @@ module.exports = {
                     name: 'Vue-i18n',
                     value: 'i18n'
                 },
+                {
+                    name: 'Firebase',
+                    value: 'firebase'
+                },
 
             ]
         },
