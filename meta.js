@@ -130,7 +130,7 @@ module.exports = {
         },
 
         project: {
-            //when: 'hstcloud  === "existing"',
+            when: (e) => e.hstcloud === 'existing',
             type: 'list',
             message: 'Select HST Cloud project:',
             choices: []
