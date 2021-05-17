@@ -1,4 +1,5 @@
-export default {
+module.exports = {
+
     host: "http://localhost/",
 {{#preset.firebase}}
     firebaseConfig: {
@@ -14,12 +15,12 @@ export default {
 {{/preset.firebase}}
 {{#preset.hstcore}}
     hstcloud: {
-        apiKey: "{{ name }}",
-        projectId: "{{ name }}-{{ projectId }}",
-        storageBucket: "{{ storageBucket }}",
-        messagingSenderId: "{{ messagingSenderId }}",
-        appId: "1:{{ projectId }}:web:{{ user.createdAt }}",
-        measurementId: "H-{{ measurementId }}"
+        apiKey: "dasdad",
+        projectId: "dasdad-3441478484",
+        storageBucket: "6359313338",
+        messagingSenderId: "2820913033",
+        appId: "1:3441478484:web:1620989959022",
+        measurementId: "H-4485436514"
     },
 {{/preset.hstcore}}
     auth: {
@@ -31,4 +32,5 @@ export default {
         },
         errorNotify: true
     }
+
 }
