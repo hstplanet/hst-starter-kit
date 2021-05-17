@@ -1,6 +1,6 @@
 export default {
     host: "http://localhost/",
-
+{{#preset.firebase}}
     firebaseConfig: {
         apiKey: "AIzaSyDKMzGCwXGkibcxz5td59LD17CrJoUVRAc",
         authDomain: "cetas-164c3.firebaseapp.com",
@@ -11,7 +11,8 @@ export default {
         appId: "1:678488584058:web:6ba58fa7e3cf7f995ef0c3",
         measurementId: "G-2FE53R01TK"
     },
-
+{{/preset.firebase}}
+{{#preset.hstcore}}
     hstcloud: {
         apiKey: "{{ name }}",
         projectId: "{{ name }}-{{ projectId }}",
@@ -20,7 +21,7 @@ export default {
         appId: "1:{{ projectId }}:web:{{ user.createdAt }}",
         measurementId: "H-{{ measurementId }}"
     },
-
+{{/preset.hstcore}}
     auth: {
         emailVerification: true,
         emailVerificationURL: "/mailverified",
