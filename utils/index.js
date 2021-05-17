@@ -89,7 +89,7 @@ To get started:
   ${yellow(
     `${data.inPlace ? '' : `cd ${data.destDirName}\n  `}${installMsg(
       data
-    )}${lintMsg(data)}hstcore dev || npm run dev`
+    )}${lintMsg(data)}hst dev || npm run dev`
   )}
 
 Documentation can be found at: https://hstplanet.com
@@ -164,6 +164,7 @@ function sortObject(object) {
 
 module.exports.complete = function (data, { chalk }) {
   const green = chalk.green;
+  
   sortDependencies(data, green);
 
     /*if (data.preset.hstcore) {
@@ -171,7 +172,7 @@ module.exports.complete = function (data, { chalk }) {
         //console.log(res);
     });
     };*/
-    // Deneme
+
   const cwd = path.join(process.cwd(), data.inPlace ? '' : data.destDirName)
 
   if (data.autoInstall) {
