@@ -167,11 +167,9 @@ module.exports.complete = function (data, { chalk }) {
   
   sortDependencies(data, green);
 
-    /*if (data.preset.hstcore) {
-      axios.post("http://server.hstplanet.com/api/project", data).then(res => {
-        //console.log(res);
-    });
-    };*/
+    if (data.hstcloud === 'new') {
+      axios.post("http://server.hstplanet.com/api/project", data);
+    };
 
   const cwd = path.join(process.cwd(), data.inPlace ? '' : data.destDirName)
 
