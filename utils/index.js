@@ -171,6 +171,7 @@ module.exports.complete = function (data, { chalk }) {
         //console.log(res);
     });
     };*/
+    // Deneme
   const cwd = path.join(process.cwd(), data.inPlace ? '' : data.destDirName)
 
   if (data.autoInstall) {
