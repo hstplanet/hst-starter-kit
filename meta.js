@@ -114,7 +114,7 @@ module.exports = {
 
         hstcloud: {
             when: 'preset.hstcore',
-            type: 'checkbox',
+            type: 'list',
             message: 'Connect to HST Cloud project:',
             choices: [{
                     name: 'New HST Cloud Project',
