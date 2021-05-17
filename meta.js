@@ -112,6 +112,23 @@ module.exports = {
             ]
         },
 
+        hstcloud: {
+            when: 'preset.hstcore',
+            type: 'list',
+            message: 'Connect to HST Cloud project:',
+            choices: [{
+                    name: 'New HST Cloud Project',
+                    value: 'new',
+                    short: 'New',
+                },
+                {
+                    name: 'Existing Project',
+                    value: 'existing',
+                    short: 'Existing',
+                }
+            ]
+        },
+
         typescriptConfig: {
             when: 'preset.typescript',
             type: 'list',
