@@ -3,7 +3,9 @@ import boot from "app/hst.conf"
 
 class Store {
 
-    collectionPath = ""
+    collectionPath = "";
+    path = "http://server.hstplanet.com/api/store/"
+        // http://server.hstplanet.com/api/store/patch?projectId=1399588395&model=deneme
 
     collection(collection) {
         this.collectionPath = collection;
@@ -12,8 +14,7 @@ class Store {
 
     get() {
         return new Promise((resolve, reject) => {
-            console.log(boot.host + this.collectionPath);
-            axios.get(boot.host + this.collectionPath).then((res) => {
+            axios.get(this.path + "/get?projectId={{projectId}}&model=" + this.collectionPath).then((res) => {
                 resolve(res.data);
             }).catch((err) => {
                 reject(err);
