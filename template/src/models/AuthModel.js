@@ -2,21 +2,23 @@ import hst from 'boot/Core';
 
 export default class AuthModel {
 
-    user = {
-        email: "",
-        password: "",
-        confirmPassword: "",
+    attributes = {
         name: "",
         lastname: "",
-        photoURL: ""
+        password: "",
+        confirmPassword: "",
+        photoURL: "",
+        email: "",
+        phone: 0,
+        user: null,
     }
 
 
     createAccount() {
         return new Promise((resolve, reject) => {
-            hst.auth().createUserWithEmailAndPassword(this.user.email, this.user.password).then(res => {
-                var displayName = this.user.name + " " + this.user.lastname;
-                hst.auth().updateProfile(displayName, this.user.photoURL);
+            hst.auth().createUserWithEmailAndPassword(this.attributes.email, this.attributes.password).then(res => {
+                var displayName = this.attributes.name + " " + this.attributes.lastname;
+                hst.auth().updateProfile(displayName, this.attributes.photoURL, this.attributes.phone);
 
                 // Kullanıcının verilerini buradan veritabanınıza yazabilirsiniz.
                 /*hst.store().collection("users").set(?).then(res => {
@@ -31,7 +33,7 @@ export default class AuthModel {
 
     login() {
         return new Promise((resolve, reject) => {
-            hst.auth().signInWithEmailAndPassword(this.user.email, this.user.password).then(res => {
+            hst.auth().signInWithEmailAndPassword(this.attributes.email, this.attributes.password).then(res => {
                 resolve(res);
 
                 // Kullanıcı girişi yapan kişiyi kendi veritabanınızdan alın.

@@ -10,7 +10,7 @@ class Store {
 
     get() {
         return new Promise((resolve, reject) => {
-            this.$axios.post(this.path + "/get?projectId={{projectId}}&model=" + this.collectionPath).then((res) => {
+            this.$axios.post(this.path + "/get?projectId=2122133963&model=" + this.collectionPath).then((res) => {
                 resolve(res.data);
             }).catch((err) => {
                 reject(err);
@@ -25,7 +25,7 @@ class Store {
 
     set(value) {
         return new Promise((resolve, reject) => {
-            this.$axios.post(this.path + "/post?projectId={{projectId}}&model=" + this.collectionPath, value).then((res) => {
+            this.$axios.post(this.path + "/post?projectId=2122133963&model=" + this.collectionPath, value).then((res) => {
                 resolve(res.data);
             }).catch((err) => {
                 reject(err);
@@ -35,7 +35,7 @@ class Store {
 
     update(value) {
         return new Promise((resolve, reject) => {
-            this.$axios.post(this.path + "/patch?projectId={{projectId}}&model=" + this.collectionPath, value).then((res) => {
+            this.$axios.post(this.path + "/patch?projectId=2122133963&model=" + this.collectionPath, value).then((res) => {
                 resolve(res.data);
             }).catch((err) => {
                 reject(err);
@@ -45,7 +45,7 @@ class Store {
 
     delete(value) {
         return new Promise((resolve, reject) => {
-            this.$axios.delete(this.path + "/delete?projectId={{projectId}}&model=" + this.collectionPath, value).then((res) => {
+            this.$axios.delete(this.path + "/delete?projectId=2122133963&model=" + this.collectionPath, value).then((res) => {
                 resolve(res.data);
             }).catch((err) => {
                 reject(err);

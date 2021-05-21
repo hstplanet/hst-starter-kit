@@ -131,7 +131,9 @@ module.exports = {{#preset.typescript}}configure({{/preset.typescript}}function 
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: [
+	'SessionStorage'
+	]
     },
 
     // animations: 'all', // --- includes all animations
