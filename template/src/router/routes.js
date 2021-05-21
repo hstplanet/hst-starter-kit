@@ -16,7 +16,7 @@ const routes = [{
             {
                 beforeEnter: (to, from, next) => {
                     hst.auth().onAuthStateChanged().then((res) => {
-                        if (!res.firebase.emailVerified) {
+                        if (res.emailStatus !== 'confirmed') {
                             next();
                         }
                         next("/");
@@ -32,7 +32,7 @@ const routes = [{
             {
                 beforeEnter: (to, from, next) => {
                     hst.auth().onAuthStateChanged().then((res) => {
-                        if (res.firebase.emailVerified) {
+                        if (res.emailStatus === 'confirmed') {
                             next();
                         }
                         next("/");
