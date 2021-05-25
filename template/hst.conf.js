@@ -1,6 +1,6 @@
 module.exports = {
 
-    host: "http://localhost/",
+    host: "http://localhost:8080/",
 {{#preset.firebase}}
     firebaseConfig: {
         apiKey: "",
