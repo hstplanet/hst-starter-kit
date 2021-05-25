@@ -18,9 +18,10 @@ const routes = [{
                     hst.auth().onAuthStateChanged().then((res) => {
                         if (res.emailStatus !== 'confirmed') {
                             next();
+                        } else {
+                            next("/");
                         }
-                        next("/");
-                    }).catch(err => {
+                    }).catch(() => {
                         next("/");
                     });
                 },
@@ -32,11 +33,12 @@ const routes = [{
             {
                 beforeEnter: (to, from, next) => {
                     hst.auth().onAuthStateChanged().then((res) => {
-                        if (res.emailStatus === 'confirmed') {
+                        if (res.emailStatus !== 'confirmed') {
                             next();
+                        } else {
+                            next("/");
                         }
-                        next("/");
-                    }).catch(err => {
+                    }).catch(() => {
                         next("/");
                     });
                 },
@@ -58,15 +60,55 @@ const routes = [{
             // Giriş
             {
                 path: 'signin',
+                beforeEnter: (to, from, next) => {
+                    hst.auth().onAuthStateChanged().then((res) => {
+                        next("/");
+                    }).catch(() => {
+                        next();
+                    });
+                },
                 component: () =>
                     import ('src/pages/Login/SignIn.vue')
             },
             //Kullanıcı Oluşturma
             {
                 path: 'signup',
+                beforeEnter: (to, from, next) => {
+                    hst.auth().onAuthStateChanged().then((res) => {
+                        next("/");
+                    }).catch(() => {
+                        next();
+                    });
+                },
                 component: () =>
                     import ('pages/Login/SignUp.vue')
             },
+            // Reset
+        {
+            path: 'reset',
+            beforeEnter: (to, from, next) => {
+                hst.auth().onAuthStateChanged().then((res) => {
+                    next("/");
+                }).catch(() => {
+                    next();
+                });
+            },
+            component: () =>
+                import('pages/Login/reset.vue')
+        },
+        // Password New
+        {
+            path: 'password-new',
+            beforeEnter: (to, from, next) => {
+                hst.auth().onAuthStateChanged().then((res) => {
+                    next("/");
+                }).catch(() => {
+                    next();
+                });
+            },
+            component: () =>
+                import('pages/Login/password-new.vue')
+        },
         ]
     },
 {{/preset.loginsystem}}

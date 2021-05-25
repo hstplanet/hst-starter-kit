@@ -3,58 +3,84 @@
     <q-form @submit="signUp" class="login">
       <q-card>
         <q-card-section class="bg-white">
-          <img src="~/assets/logo.png" height="42px" alt="logo" />
+           <router-link to="/">
+            <img src="~/assets/logo.png" height="26px" alt="logo" />
+          </router-link>
         </q-card-section>
         <q-card-section class="email-panel">
-          <span class="q-mb-md block">Kayıt Ol</span>
+          <!-- E Posta -->
           <q-input
             color="red"
             dense
-            input-style="height : 30px"
-            v-model="auth.user.email"
+            v-model="auth.attributes.email"
+            outlined
             type="email"
-            placeholder="E Mail"
+            placeholder="E Mail Adresiniz"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val && val.length > 0) || '',
+            ]"
           />
+          <!-- Şifre -->
           <q-input
             color="red"
             dense
-            input-style="height : 30px"
-            v-model="auth.user.password"
+            v-model="auth.attributes.password"
+            outlined
             type="password"
             placeholder="Şifre"
-            class="q-mt-md"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || '',
+            ]"
           />
+          <!-- Şifre Onay -->
           <q-input
             color="red"
             dense
-            input-style="height : 30px"
-            v-model="auth.user.confirmPassword"
+            v-model="auth.attributes.confirmPassword"
+            outlined
             type="password"
             placeholder="Şifre Onay"
-            class="q-mt-md"
             error-message="Şifreler uyuşmuyor."
-            :error="!this.passwordCheck"
+            class="q-mb-md"
+            :error="passwordControl"
+            lazy-rules
+            :rules="[
+              (val) =>
+                (val && val.length > 0) || '',
+            ]"
           />
+          <!-- Adınız -->
           <q-input
             color="red"
             dense
-            input-style="height : 30px"
-            v-model="auth.user.name"
+            v-model="auth.attributes.name"
+            outlined
             type="text"
             placeholder="Adınız"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || '',
+            ]"
           />
+          <!-- Soyadınız -->
           <q-input
             color="red"
             dense
-            input-style="height : 30px"
-            v-model="auth.user.lastname"
+            v-model="auth.attributes.lastname"
+            outlined
             type="text"
             placeholder="Soyadınız"
-            class="q-mt-md"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || '',
+            ]"
           />
           <div class="q-pt-lg">
-            Hesabınız yok mu ?
-            <router-link to="/login/signup">Bir tane oluştur !</router-link>
+            Zaten hesabın var mı ?
+            <router-link to="/login/signin">Giriş yap !</router-link>
           </div>
           <div class="q-pt-md">
             Şifrenizi mi unuttunuz ?
@@ -62,7 +88,12 @@
           </div>
         </q-card-section>
         <q-card-section class="text-right">
-          <q-btn type="submit" style="width: 108px" color="red" label="Kayıt Ol" />
+          <q-btn
+            type="submit"
+            style="width: 108px"
+            color="red"
+            label="Kayıt Ol"
+          />
         </q-card-section>
       </q-card>
     </q-form>
@@ -74,15 +105,25 @@ import AuthModel from "models/AuthModel";
 export default {
   data() {
     return {
-      passwordCheck: true,
+      passwordCheck: false,
       auth: new AuthModel(),
     };
   },
   methods: {
     signUp() {
-      this.auth.createAccount().then(res => {
-        this.$router.push("/");
+      this.auth.createAccount().then((res) => {
+        this.$router.push("/mailverified");
       });
+    },
+  },
+  computed: {
+    passwordControl() {
+      if (
+        this.auth.attributes.confirmPassword !== this.auth.attributes.password
+      ) {
+        return true;
+      }
+      return false;
     },
   },
 };

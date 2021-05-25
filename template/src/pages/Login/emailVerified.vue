@@ -2,7 +2,7 @@
   <q-page class="flex flex-center">
     <div class="column" style="width: 50%">
       <span class="text-red text-h4">Aramıza Hoşgeldin</span>
-      <span class="text-h6">Muhasebe GO Hesabınızı doğrulayın.</span>
+      <span class="text-h6">{{apiName}} Hesabınızı doğrulayın.</span>
       <q-separator color="red" class="q-my-sm" />
       <p>
         E-Posta adresinize doğrulama yapmanız için bir mail gönderdik. Bu maildeki linki
@@ -22,14 +22,27 @@
 </template>
 
 <script>
+import AuthModel from 'models/AuthModel';
+import hstconf from 'app/hst.conf';
 export default {
   data() {
-    return {};
+    return {
+      auth : new AuthModel()
+    };
   },
-  created() {},
   methods: {
-    sendMail() {},
+    sendMail() {
+      this.auth.sendEmailVerification();
+    },
   },
+  computed : {
+    apiName(){
+      if (hstconf.hstcloud !== undefined) {
+        return hstconf.hstcloud.apiKey;
+      }
+      return "";
+    }
+  }
 };
 </script>
 

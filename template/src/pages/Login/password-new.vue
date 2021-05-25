@@ -8,42 +8,31 @@
           </router-link>
         </q-card-section>
         <q-card-section class="email-panel">
-          <!-- E Posta -->
-          <q-input
-            dense
-            color="red"
-            v-model="auth.attributes.email"
-            type="email"
-            outlined
-            placeholder="E Mail Adresiniz"
-            lazy-rules
-            :rules="[
-              (val) =>
-                (val && val.length > 0) || '',
-            ]"
-          />
-          <!-- Şifre -->
           <q-input
             dense
             color="red"
             v-model="auth.attributes.password"
-            outlined
             type="password"
             placeholder="Şifre"
+            outlined
             lazy-rules
             :rules="[(val) => (val && val.length > 0) || '']"
           />
-          <div class="q-pt-lg">
-            Hesabınız yok mu ?
-            <router-link to="/login/signup">Bir tane oluştur !</router-link>
-          </div>
-          <div class="q-pt-md">
-            Şifrenizi mi unuttunuz ?
-            <router-link to="/login/reset">Şifreni sıfırla !</router-link>
-          </div>
+          <q-input
+            dense
+            color="red"
+            v-model="auth.attributes.confirmPassword"
+            type="password"
+            placeholder="Şifre Onay"
+            error-message="Şifreler uyuşmuyor."
+            :error="passwordError"
+            outlined
+            lazy-rules
+            :rules="[(val) => (val && val.length > 0) || '']"
+          />
         </q-card-section>
         <q-card-section class="text-right">
-          <q-btn type="submit" style="width: 108px" color="red" label="Giriş" />
+          <q-btn type="submit" style="width: 108px" color="red" label="Sıfırla" />
         </q-card-section>
       </q-card>
     </q-form>
@@ -56,15 +45,28 @@ export default {
   data() {
     return {
       auth: new AuthModel(),
+      passwordError: false,
     };
+  },
+  created() {
+    if (this.$route.query.token === undefined) {
+      this.$router.push("/");
+    }
   },
   methods: {
     signin() {
-      this.auth.login().then((res) => {
-        this.$router.push("/");
-      }).catch(err => {
-        console.log(err);
-      });
+      if (
+        this.auth.attributes.password === this.auth.attributes.confirmPassword
+      ) {
+        this.auth
+          .sendNewPassword(this.$route.query.token)
+          .then(() => {
+            this.$router.push("/login/signin");
+          })
+          .catch(() => {});
+      } else {
+        this.passwordError = true;
+      }
     },
   },
 };

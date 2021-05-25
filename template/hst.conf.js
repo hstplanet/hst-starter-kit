@@ -26,6 +26,7 @@ module.exports = {
     auth: {
         emailVerification: true,
         emailVerificationURL: "/mailverified",
+        resetPasswordURL: "login/password-new",
         actionCodeSettings: {
             url: "/mailverifiedok?Id=",
             handleCodeInApp: true

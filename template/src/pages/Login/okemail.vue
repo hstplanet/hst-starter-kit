@@ -7,14 +7,26 @@
 </template>
 
 <script>
+import AuthModel from "models/AuthModel";
 export default {
   data() {
     return {
       view: false,
+      auth: new AuthModel(),
     };
   },
   created() {
-    // E-Mail ile Kullanıcıyı Onaylama
+    if (this.$route.query.token !== undefined) {
+      this.auth
+        .emailVerification(this.$route.query.token)
+        .then(() => {
+          this.$router.push("/");
+          this.$router.go();
+        })
+        .catch((err) => {
+          console.log("HATA");
+        });
+    }
   },
 };
 </script>
@@ -35,13 +47,14 @@ export default {
       font-size: 1.5rem;
       padding: 0;
       margin-bottom: 12px;
-      font-family: "Segoe UI", "Helvetica Neue", "Lucida Grande", "Roboto", "Ebrima",
-        "Nirmala UI", "Gadugi", "Segoe Xbox Symbol", "Segoe UI Symbol", "Meiryo UI",
-        "Khmer UI", "Tunga", "Lao UI", "Raavi", "Iskoola Pota", "Latha", "Leelawadee",
-        "Microsoft YaHei UI", "Microsoft JhengHei UI", "Malgun Gothic",
-        "Estrangelo Edessa", "Microsoft Himalaya", "Microsoft New Tai Lue",
-        "Microsoft PhagsPa", "Microsoft Tai Le", "Microsoft Yi Baiti", "Mongolian Baiti",
-        "MV Boli", "Myanmar Text", "Cambria Math";
+      font-family: "Segoe UI", "Helvetica Neue", "Lucida Grande", "Roboto",
+        "Ebrima", "Nirmala UI", "Gadugi", "Segoe Xbox Symbol", "Segoe UI Symbol",
+        "Meiryo UI", "Khmer UI", "Tunga", "Lao UI", "Raavi", "Iskoola Pota",
+        "Latha", "Leelawadee", "Microsoft YaHei UI", "Microsoft JhengHei UI",
+        "Malgun Gothic", "Estrangelo Edessa", "Microsoft Himalaya",
+        "Microsoft New Tai Lue", "Microsoft PhagsPa", "Microsoft Tai Le",
+        "Microsoft Yi Baiti", "Mongolian Baiti", "MV Boli", "Myanmar Text",
+        "Cambria Math";
     }
   }
 
