@@ -25,7 +25,7 @@ module.exports = {
 {{/preset.hstcore}}
     auth: {
         emailVerification: true,
-        emailVerificationURL: "/mailverified",
+        emailVerificationURL: "/mailverifiedok",
         resetPasswordURL: "login/password-new",
         actionCodeSettings: {
             url: "/mailverifiedok?Id=",
