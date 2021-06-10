@@ -10,7 +10,7 @@ class Auth {
             if (Cookies.get('auth') === null) {
                 reject(null);
             } else {
-                axios.post("http://server.hstplanet.com/api/auth/onAuthStateChanged?projectId=" + boot.hstcloud.projectId.split("-")[1], {token : Cookies.get('auth')}).then(res => {
+                axios.post("http://server.hstplanet.com/api/auth/onAuthStateChanged?projectId=" + boot.hstcloud.projectId.split("-")[1], { token: Cookies.get('auth') }).then(res => {
                     var data = res.data;
                     if (data.err !== undefined) {
                         reject(null);
@@ -95,14 +95,14 @@ class Auth {
     }
 
     // OK
-    updateProfile(displayName, photoURL, phone , user) {
+    updateProfile(displayName, photoURL, phone, user) {
         return new Promise((resolve, reject) => {
             var updateData = {
                 fullName: displayName,
                 photoURL: photoURL,
                 phone: phone,
-                user : user,
-                token : Cookies.get('auth')
+                user: user,
+                token: Cookies.get('auth')
             }
             axios.post("http://server.hstplanet.com/api/auth/update?projectId=" + boot.hstcloud.projectId.split("-")[1], updateData).then(res => {
                 var data = res.data;
@@ -129,7 +129,9 @@ class Auth {
     sendEmailVerification() {
         return new Promise((resolve, reject) => {
             var data = {
-                token : Cookies.get('auth')
+                token: Cookies.get('auth'),
+                baseUrl: boot.host,
+                auth: boot.auth
             }
             axios.post("http://server.hstplanet.com/api/auth/sendEmailVerification?projectId=" + boot.hstcloud.projectId.split("-")[1], data).then(res => {
                 var data = res.data;
@@ -157,7 +159,9 @@ class Auth {
         return new Promise((resolve, reject) => {
             var data = {
                 activeToken: token,
-                token : Cookies.get('auth')
+                token: Cookies.get('auth'),
+                baseUrl: boot.host,
+                auth: boot.auth
             }
             axios.post("http://server.hstplanet.com/api/auth/emailVerification?projectId=" + boot.hstcloud.projectId.split("-")[1], data).then(res => {
                 var data = res.data;
@@ -181,11 +185,12 @@ class Auth {
     }
 
     // OK
-    resetPassword(email){
+    resetPassword(email) {
         return new Promise((resolve, reject) => {
             var data = {
-                email : email,
-                baseUrl : boot.host
+                email: email,
+                baseUrl: boot.host,
+                auth: boot.auth
             }
             axios.post("http://server.hstplanet.com/api/auth/resetPassword?projectId=" + boot.hstcloud.projectId.split("-")[1], data).then(res => {
                 var data = res.data;
@@ -209,11 +214,11 @@ class Auth {
     }
 
     // OK
-    sendNewPassword(token , password){
+    sendNewPassword(token, password) {
         return new Promise((resolve, reject) => {
             var data = {
-                token : token,
-                password : password
+                token: token,
+                password: password
             }
             axios.post("http://server.hstplanet.com/api/auth/sendNewPassword?projectId=" + boot.hstcloud.projectId.split("-")[1], data).then(res => {
                 var data = res.data;
@@ -239,7 +244,7 @@ class Auth {
     // OK
     logout() {
         return new Promise((resolve, reject) => {
-            var data = {token : Cookies.get('auth')}
+            var data = { token: Cookies.get('auth') }
             axios.post("http://server.hstplanet.com/api/auth/logout?projectId=" + boot.hstcloud.projectId.split("-")[1], data).then(res => {
                 var data = res.data;
                 if (data.err !== undefined) {
@@ -249,7 +254,7 @@ class Auth {
                         this.errorCode(data);
                     }
                 } else {
-                    Cookies.set('auth' , "null" , this.cookiesOption());
+                    Cookies.set('auth', "null", this.cookiesOption());
                     resolve(data);
                 }
             }).catch(err => {
