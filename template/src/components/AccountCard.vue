@@ -9,8 +9,8 @@
       </q-item-section>
 
       <q-item-section>
-        <q-item-label>{{ auth.attributes.fullName }}</q-item-label>
-        <q-item-label caption>{{ auth.attributes.emailAddress }}</q-item-label>
+        <q-item-label></q-item-label>
+        <q-item-label caption></q-item-label>
       </q-item-section>
       <!-- Account Menu -->
       <q-menu>
@@ -22,12 +22,8 @@
           </q-card-section>
           <q-card-section class="q-pt-none">
             <q-item-section>
-              <q-item-label>
-                {{ auth.attributes.fullName }}
-              </q-item-label>
-              <q-item-label caption>
-                {{ auth.attributes.emailAddress }}
-              </q-item-label>
+              <q-item-label v-html="auth.attributes.fullName" />
+              <q-item-label caption v-html="auth.attributes.emailAddress" />
             </q-item-section>
           </q-card-section>
           <q-card-section

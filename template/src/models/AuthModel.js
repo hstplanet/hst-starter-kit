@@ -1,4 +1,5 @@
 import hst from 'boot/Core';
+import { Notify } from 'quasar';
 
 export default class AuthModel {
 
@@ -10,7 +11,7 @@ export default class AuthModel {
         photoURL: "",
         email: "",
         phone: "",
-        user: null,
+        profile: null,
     }
 
     createAccount() {
@@ -38,8 +39,8 @@ export default class AuthModel {
     login() {
         return new Promise((resolve, reject) => {
             hst.auth().signInWithEmailAndPassword(this.attributes.email, this.attributes.password).then(res => {
+                console.log(res);
                 resolve(res);
-
                 // Kullanıcı girişi yapan kişiyi kendi veritabanınızdan alın.
                 /*hst.store().collection("users").where("uid", "=", user.user.uid).get().then(user => {
                     var data = {
@@ -67,13 +68,16 @@ export default class AuthModel {
     }
 
     sendEmailVerification() {
-        hst.auth().onAuthStateChanged(user => {
-            console.log(user);
-            hst.auth().sendEmailVerification(user.emailAddress).then(res => {
-                console.log(res);
-            });
-        }).catch(err => {
-            console.log(err);
+        return new Promise((resolve, reject) => {
+            hst.auth().onAuthStateChanged().then(user => {
+                hst.auth().sendEmailVerification(user.emailAddress).then(res => {
+                    Notify.create({
+                        message: "Sıfırlama E-Postası Gönderildi.",
+                        color: "green",
+                    });
+                    resolve(res);
+                });
+            })
         })
 
     }
@@ -111,7 +115,7 @@ export default class AuthModel {
 
     sendNewPassword(token) {
         return new Promise((resolve, reject) => {
-            hst.auth().sendNewPassword(token , this.attributes.password).then(() => {
+            hst.auth().sendNewPassword(token, this.attributes.password).then(() => {
                 resolve();
             }).catch(() => {
                 reject();
