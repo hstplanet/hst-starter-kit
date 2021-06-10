@@ -112,11 +112,23 @@ export default class IStore {
                 valuesToSet: null
             }).then(res => {
                 res.data.forEach(element => {
-                    element.update = function() {
-                        console.log("Update");
+                    element.update = () => {
+                        return new Promise((resolve, reject) => {
+                            this.update({ id: element.id }).then(res => {
+                                resolve(res)
+                            }).catch(err => {
+                                reject(err);
+                            });
+                        });
                     }
-                    element.destroy = function() {
-                        console.log("Destroy");
+                    element.destroy = () => {
+                        return new Promise((resolve, reject) => {
+                            this.destroy({ id: element.id }).then(res => {
+                                resolve(res)
+                            }).catch(err => {
+                                reject(err);
+                            });
+                        });
                     }
                 });
                 resolve(res.data);
@@ -137,11 +149,25 @@ export default class IStore {
                 initialValues: null,
                 valuesToSet: null
             }).then(res => {
-                res.data.update = function() {
-                    console.log("Update");
+                res.data.update = () => {
+                    return new Promise((resolve, reject) => {
+                        console.log("Update");
+                        this.update({ id: res.data.id }).then(res => {
+                            console.log("Update : ", res);
+                            resolve(res)
+                        }).catch(err => {
+                            reject(err);
+                        });
+                    });
                 }
-                res.data.destroy = function() {
-                    console.log("Destroy");
+                res.data.destroy = () => {
+                    return new Promise((resolve, reject) => {
+                        this.destroy({ id: res.data.id }).then(res => {
+                            resolve(res)
+                        }).catch(err => {
+                            reject(err);
+                        });
+                    });
                 }
                 resolve(res.data);
 
@@ -184,13 +210,14 @@ export default class IStore {
                 selector: "update",
                 criteria: criteria,
                 initialValues: null,
-                valuesToSet: this.attributes
+                valuesToSet: data
             }).then(res => {
                 resolve(res.data);
             }).catch(err => {
+                console.log(err);
                 reject(err);
             });
-        })
+        });
     }
 
     updateOne(criteria, valuesToSet) {
@@ -207,6 +234,82 @@ export default class IStore {
 
     setModel(model) {
         this.model = model;
+    }
+
+    synchronized() {
+        var data = Object.assign({}, this.attributes);
+        console.log("SYNC : ", data);
+        var changedData = Object.assign({}, this.attributes);
+        return new Promise(async (resolve, reject) => {
+            // Senkronize Edilelecek Data Var
+            if (Object.keys(data).filter(e => typeof data[e] === "object").length > 0) {
+                var count = 0;
+                Object.keys(data).filter(e => typeof data[e] === "object").forEach(element => {
+                    // Objele Array mi ?
+                    if (Array.isArray(data[element])) {
+                        changedData[element] = [];
+                        data[element].forEach(arrayData => {
+                            if (arrayData.id !== undefined) {
+                                // Güncelle
+                                axios.post(this.path + "/orm?projectId=" + this.projectId + "&model=" + element, {
+                                    selector: "update",
+                                    criteria: { id: arrayData.id },
+                                    initialValues: null,
+                                    valuesToSet: arrayData
+                                }).then(res => {
+                                    changedData[element].push(res.data.id);
+                                    count++;
+                                });
+                            } else {
+                                // Yeni
+                                axios.post(this.path + "/orm?projectId=" + this.projectId + "&model=" + element, {
+                                    selector: "create",
+                                    criteria: null,
+                                    initialValues: arrayData,
+                                    valuesToSet: null
+                                }).then(res => {
+                                    changedData[element].push(res.data.id);
+                                    count++;
+                                });
+                            }
+                        });
+                    } else {
+                        if (data[element] !== null) {
+                            if (data[element].id !== undefined) {
+                                // Güncelle
+                                axios.post(this.path + "/orm?projectId=" + this.projectId + "&model=" + element, {
+                                    selector: "update",
+                                    criteria: { id: data[element].id },
+                                    initialValues: null,
+                                    valuesToSet: data[element]
+                                }).then(res => {
+                                    changedData[element] = res.data.id;
+                                    count++;
+                                });
+                            } else {
+                                // Yeni
+                                axios.post(this.path + "/orm?projectId=" + this.projectId + "&model=" + element, {
+                                    selector: "create",
+                                    criteria: null,
+                                    initialValues: data[element],
+                                    valuesToSet: null
+                                }).then(res => {
+                                    changedData[element] = res.data.id;
+                                    count++;
+                                });
+                            }
+                        }
+                    }
+                    if (Object.keys(data).filter(e => typeof data[e] === "object").length - 1 === count) {
+                        resolve(changedData)
+                    }
+                });
+            }
+            // Senkronize Edilelecek Data Yok
+            else {
+                resolve(changedData);
+            }
+        });
     }
 
 }

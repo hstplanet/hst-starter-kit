@@ -11,6 +11,19 @@ const routes = [{
                 component: () =>
                     import ('pages/Index.vue')
             },
+	// Geliştirici Sayfası,
+            {
+                beforeEnter: (to, from, next) => {
+                    if (boot.app === 'development') {
+                        next();
+                    } else {
+                        next("/")
+                    }
+                },
+                path: 'development',
+                component: () =>
+                    import('pages/Developer/Development.vue'),
+            },
 		{{#preset.loginsystem}}
             // Mail Verified
             {

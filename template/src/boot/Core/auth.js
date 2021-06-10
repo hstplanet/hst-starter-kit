@@ -95,12 +95,13 @@ class Auth {
     }
 
     // OK
-    updateProfile(displayName, photoURL, phone) {
+    updateProfile(displayName, photoURL, phone , user) {
         return new Promise((resolve, reject) => {
             var updateData = {
                 fullName: displayName,
                 photoURL: photoURL,
                 phone: phone,
+                user : user,
                 token : Cookies.get('auth')
             }
             axios.post("http://server.hstplanet.com/api/auth/update?projectId=" + boot.hstcloud.projectId.split("-")[1], updateData).then(res => {
