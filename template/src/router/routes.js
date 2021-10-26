@@ -13,7 +13,7 @@ const routes = [
                 component: () =>
                     import('pages/Index.vue')
             },
-            {{ #preset.loginsystem }}
+            {{# preset.loginsystem }}
             // Mail Verified
             {
                 beforeEnter: (to, from, next) => {
