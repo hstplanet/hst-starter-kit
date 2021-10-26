@@ -4,26 +4,30 @@
     <q-item class="cursor-pointer" v-if="isLogin">
       <q-item-section avatar>
         <q-avatar>
-          <img :src="auth.attributes.photoURL" />
+          <img :src="userData.photoURL" />
         </q-avatar>
       </q-item-section>
 
       <q-item-section>
-        <q-item-label></q-item-label>
-        <q-item-label caption></q-item-label>
+        <q-item-label>
+          {{userData.fullName}}
+        </q-item-label>
+        <q-item-label caption>
+          {{userData.emailAddress}}
+        </q-item-label>
       </q-item-section>
       <!-- Account Menu -->
       <q-menu>
         <q-card class="text-center" style="min-width: 300px">
           <q-card-section>
             <q-avatar size="76px">
-              <img :src="auth.attributes.photoURL" />
+              <img :src="userData.photoURL" />
             </q-avatar>
           </q-card-section>
           <q-card-section class="q-pt-none">
             <q-item-section>
-              <q-item-label v-html="auth.attributes.fullName" />
-              <q-item-label caption v-html="auth.attributes.emailAddress" />
+              <q-item-label v-html="userData.fullName" />
+              <q-item-label caption v-html="userData.emailAddress" />
             </q-item-section>
           </q-card-section>
           <q-card-section
@@ -80,37 +84,31 @@
 </template>
 
 <script>
-import AuthModel from "models/AuthModel";
+import hst from "hst/index"
 export default {
   name: "AccountCard",
   data() {
     return {
-      auth: new AuthModel(),
       userData: null,
       isLogin: false,
+      photoURL: "",
+      fullName : "",
+      emailAddress: ""
+
     };
   },
   created() {
-    this.auth
-      .onAuthStateChanged()
-      .then((res) => {
-        this.userData = res;
-        this.auth.attributes = res;
-        this.isLogin = true;
-      })
-      .catch((err) => {
-        this.isLogin = false;
-      });
+    hst.server.auth.onAuthStateChanged().then(user => {
+      this.userData = user;
+      this.isLogin = true;
+    });
   },
   methods: {
     logout() {
-      this.auth
-        .logout()
-        .then((e) => {
-          this.$router.push("/");
-          this.$router.go();
-        })
-        .catch((err) => {});
+      hst.server.auth.logout().then(res => {
+        this.isLogin = false;
+        this.$router.push("/");
+      });
     },
   },
 };

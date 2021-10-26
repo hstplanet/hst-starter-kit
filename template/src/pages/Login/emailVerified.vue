@@ -1,19 +1,20 @@
 <template>
   <q-page class="flex flex-center">
     <div class="column" style="width: 50%">
-      <span class="text-red text-h4">Aramıza Hoşgeldin</span>
-      <span class="text-h6">{{apiName}} Hesabınızı doğrulayın.</span>
-      <q-separator color="red" class="q-my-sm" />
+      <img src="~/assets/logo.png" alt="logo" style="height: 32px" />
+      <span class="text-grey-8 text-h4">Aramıza Hoşgeldin</span>
+      <span class="text-h6"> Hesabınızı doğrulayın.</span>
+      <q-separator color="grey-8" class="q-my-sm" />
       <p>
-        E-Posta adresinize doğrulama yapmanız için bir mail gönderdik. Bu maildeki linki
-        kullanarak doğrulama yapabilirsiniz. E Postanın gelmediğini düşünüyorsanız lütfen
-        gereksiz postalar klasörünü kontrol edin. Eğer bir sorun yaşadıysanız size tekrar
-        mail gönderebiliriz.
+        E-Posta adresinize doğrulama yapmanız için bir mail gönderdik. Bu
+        maildeki linki kullanarak doğrulama yapabilirsiniz. E Postanın
+        gelmediğini düşünüyorsanız lütfen gereksiz postalar klasörünü kontrol
+        edin. Eğer bir sorun yaşadıysanız size tekrar mail gönderebiliriz.
       </p>
       <q-btn
         class="text-capitalize q-mt-mda"
         label="Tekrar Mail Gönder"
-        color="red"
+        color="black"
         text-color="white"
         @click="sendMail"
       />
@@ -22,27 +23,26 @@
 </template>
 
 <script>
-import AuthModel from 'models/AuthModel';
-import hstconf from 'app/hst.conf';
+import hst from "hst/index"
 export default {
   data() {
     return {
-      auth : new AuthModel()
+
     };
   },
   methods: {
     sendMail() {
-      this.auth.sendEmailVerification();
+     hst.server.auth.sendEmailVerification();
     },
   },
-  computed : {
-    apiName(){
-      if (hstconf.hstcloud !== undefined) {
-        return hstconf.hstcloud.apiKey;
+  computed: {
+    apiName() {
+      if (hst.conf.hstcloud !== undefined) {
+        return hst.conf.hstcloud.apiKey;
       }
       return "";
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -62,13 +62,6 @@ export default {
       font-size: 1.5rem;
       padding: 0;
       margin-bottom: 12px;
-      font-family: "Segoe UI", "Helvetica Neue", "Lucida Grande", "Roboto", "Ebrima",
-        "Nirmala UI", "Gadugi", "Segoe Xbox Symbol", "Segoe UI Symbol", "Meiryo UI",
-        "Khmer UI", "Tunga", "Lao UI", "Raavi", "Iskoola Pota", "Latha", "Leelawadee",
-        "Microsoft YaHei UI", "Microsoft JhengHei UI", "Malgun Gothic",
-        "Estrangelo Edessa", "Microsoft Himalaya", "Microsoft New Tai Lue",
-        "Microsoft PhagsPa", "Microsoft Tai Le", "Microsoft Yi Baiti", "Mongolian Baiti",
-        "MV Boli", "Myanmar Text", "Cambria Math";
     }
   }
 

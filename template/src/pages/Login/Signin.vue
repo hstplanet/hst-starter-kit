@@ -3,8 +3,8 @@
     <q-form @submit="signin" class="login">
       <q-card>
         <q-card-section class="bg-white">
-          <router-link to="/">
-            <img src="~/assets/logo.png" height="26px" alt="logo" />
+          <router-link to="/" class="text-h6">
+            <img src="~/assets/logo.png" alt="logo" style="height: 32px" />
           </router-link>
         </q-card-section>
         <q-card-section class="email-panel">
@@ -12,21 +12,18 @@
           <q-input
             dense
             color="red"
-            v-model="auth.attributes.email"
+            v-model="email"
             type="email"
             outlined
             placeholder="E Mail Adresiniz"
             lazy-rules
-            :rules="[
-              (val) =>
-                (val && val.length > 0) || '',
-            ]"
+            :rules="[(val) => (val && val.length > 0) || '']"
           />
           <!-- Şifre -->
           <q-input
             dense
             color="red"
-            v-model="auth.attributes.password"
+            v-model="password"
             outlined
             type="password"
             placeholder="Şifre"
@@ -43,7 +40,13 @@
           </div>
         </q-card-section>
         <q-card-section class="text-right">
-          <q-btn type="submit" style="width: 108px" color="red" label="Giriş" />
+          <q-btn
+            type="submit"
+            class="text-capitalize"
+            style="width: 108px"
+            color="grey-10"
+            label="Giriş"
+          />
         </q-card-section>
       </q-card>
     </q-form>
@@ -51,21 +54,30 @@
 </template>
 
 <script>
-import AuthModel from "models/AuthModel";
+import hst from "hst/index"
 export default {
   data() {
     return {
-      auth: new AuthModel(),
+      email : "",
+      password : ""
     };
   },
   methods: {
     signin() {
-      this.auth.login().then((res) => {
-        this.$router.push("/");
+      hst.server.auth.signInWithEmailAndPassword(this.email , this.password).then(res => {
+         this.$router.push("/");
       }).catch(err => {
-        console.log(err);
+        console.log(err)
       });
     },
   },
 };
 </script>
+
+
+<style>
+a {
+  text-decoration: none;
+}
+</style>
+

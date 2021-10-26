@@ -9,12 +9,8 @@ class Auth {
 
     onAuthStateChanged() {
         return new Promise((resolve, reject) => {
-            axios.post(hst.conf.server + "service/auth/onAuthStateChanged?target="+hst.conf.serverTarget, { token: hst.util.SessionStorage.getItem("auth") }).then(user => {
+            axios.post(hst.conf.server + "service/auth/onAuthStateChanged?target=" + hst.conf.serverTarget, { token: hst.util.LocalStorage.getItem("auth") }).then(user => {
                 if (user.data.err !== undefined && user.data.err) {
-                    hst.util.notify.create({
-                        message: user.data.message,
-                        color: "red"
-                    });
                     reject(user.data);
                 } else {
                     resolve(user.data);
@@ -27,7 +23,7 @@ class Auth {
 
     signInWithEmailAndPassword(email, password) {
         return new Promise((resolve, reject) => {
-            axios.post(hst.conf.server + "service/auth/signin?target="+hst.conf.serverTarget, { emailAddress: email, password: password }).then(token => {
+            axios.post(hst.conf.server + "service/auth/signin?target=" + hst.conf.serverTarget, { emailAddress: email, password: password }).then(token => {
                 if (token.data.err !== undefined && token.data.err) {
                     hst.util.notify.create({
                         message: token.data.message,
@@ -35,7 +31,7 @@ class Auth {
                     });
                     reject(token.data);
                 } else {
-                    hst.util.SessionStorage.set("auth", token.data.token);
+                    hst.util.LocalStorage.set("auth", token.data.token);
                     resolve(token.data);
                 }
             }).catch(err => {
@@ -51,7 +47,7 @@ class Auth {
 
     createUserWithEmailAndPassword(email, password) {
         return new Promise((resolve, reject) => {
-            axios.post(hst.conf.server + "service/auth/signup?target="+hst.conf.serverTarget, { emailAddress: email, password: password, auth: hst.conf.auth }).then(token => {
+            axios.post(hst.conf.server + "service/auth/signup?target=" + hst.conf.serverTarget, { emailAddress: email, password: password, auth: hst.conf.auth }).then(token => {
                 if (token.data.err !== undefined && token.data.err) {
                     hst.util.notify.create({
                         message: token.data.message,
@@ -59,13 +55,14 @@ class Auth {
                     });
                     reject(token.data);
                 } else {
-                    hst.util.SessionStorage.set("auth", token.data.token);
+                    hst.util.LocalStorage.set("auth", token.data.token);
                     if (hst.conf.auth.emailVerification) {
-                        axios.post(hst.conf.server + "service/auth/sendEmailVerification", { token: token.data.token }).then(token => {
-
+                        this.sendEmailVerification().then(res => {
+                            resolve(token);
                         });
+                    } else {
+                        resolve(token);
                     }
-                    resolve(token);
                 }
             }).catch(err => {
                 hst.util.notify.create({
@@ -79,8 +76,8 @@ class Auth {
 
     updateProfile(update) {
         return new Promise((resolve, reject) => {
-            update.token = hst.util.SessionStorage.getItem("auth");
-            axios.post(hst.conf.server + "service/auth/update?target="+hst.conf.serverTarget, update).then(res => {
+            update.token = hst.util.LocalStorage.getItem("auth");
+            axios.post(hst.conf.server + "service/auth/update?target=" + hst.conf.serverTarget, update).then(res => {
                 if (res.data.err) {
                     reject(res.data);
                 } else {
@@ -95,12 +92,12 @@ class Auth {
             this.onAuthStateChanged().then(user => {
                 var res = {
                     fullName: user.fullName,
-                    url: hst.conf.host + hst.conf.auth.emailVerificationURL + "?token=" + hst.util.SessionStorage.getItem("auth")
+                    url: hst.conf.host + hst.conf.auth.emailVerificationURL + "?token=" + hst.util.LocalStorage.getItem("auth")
                 }
                 var message = ejs.render(register, res);
                 hst.conf.mailConfig.auth.pass = cr.AES.encrypt(hst.conf.mailConfig.auth.pass, hst.conf.hstcloud.key).toString();
                 hst.conf.mailConfig.auth.user = cr.AES.encrypt(hst.conf.mailConfig.auth.user, hst.conf.hstcloud.key).toString();
-                axios.post(hst.conf.server + "service/auth/sendEmailVerification?target="+hst.conf.serverTarget, { token: hst.util.SessionStorage.getItem("auth"), message: message, config: hst.conf.mailConfig }).then(mail => {
+                axios.post(hst.conf.server + "service/auth/sendEmailVerification?target=" + hst.conf.serverTarget, { token: hst.util.LocalStorage.getItem("auth"), message: message, config: hst.conf.mailConfig }).then(mail => {
                     resolve(mail);
                 }).catch(err => {
                     reject(err);
@@ -111,8 +108,8 @@ class Auth {
 
     logout() {
         return new Promise((resolve, reject) => {
-            axios.post(hst.conf.server + "service/auth/logout?target="+hst.conf.serverTarget, { token: hst.util.SessionStorage.getItem("auth") }).then(logout => {
-                hst.util.SessionStorage.remove("auth");
+            axios.post(hst.conf.server + "service/auth/logout?target=" + hst.conf.serverTarget, { token: hst.util.LocalStorage.getItem("auth") }).then(logout => {
+                hst.util.LocalStorage.remove("auth");
                 resolve(logout.data);
             }).catch(err => {
                 reject(err);
@@ -122,8 +119,7 @@ class Auth {
 
     emailVerification() {
         return new Promise((resolve, reject) => {
-            axios.post(hst.conf.server + "service/auth/emailVerification?target="+hst.conf.serverTarget, { token: hst.util.SessionStorage.getItem("auth") }).then(verification => {
-                console.log(verification.data);
+            axios.post(hst.conf.server + "service/auth/emailVerification?target=" + hst.conf.serverTarget, { token: hst.util.LocalStorage.getItem("auth") }).then(verification => {
                 resolve(verification.data);
             }).catch(err => {
                 reject(err);
@@ -131,31 +127,28 @@ class Auth {
         });
     };
 
-    resetPassword() {
+    resetPassword(email) {
         return new Promise((resolve, reject) => {
-            this.onAuthStateChanged().then(user => {
-                axios.post(hst.conf.server + "service/auth/resetPassword?target="+hst.conf.serverTarget, { email: user.emailAddress }).then(reset => {
-
-                    var res = {
-                        fullName: reset.data.fullName,
-                        url: hst.conf.host + hst.conf.auth.emailVerificationURL + "?token=" + reset.data.token
-                    }
-                    var message = ejs.render(resetMail, res);
-                    hst.conf.mailConfig.auth.pass = cr.AES.encrypt(hst.conf.mailConfig.auth.pass, hst.conf.hstcloud.key).toString();
-                    hst.conf.mailConfig.auth.user = cr.AES.encrypt(hst.conf.mailConfig.auth.user, hst.conf.hstcloud.key).toString();
-                    var mail = {
-                        subject: "E Mail Sıfırmala",
-                        message: message,
-                        to: user.emailAddress
-                    }
-                    axios.post(hst.conf.server + "service/mailservice/send", { mail: mail, config: hst.conf.mailConfig }).then(res => {
-                        resolve(res);
-                    }).catch(err => {
-                        reject(err);
-                    });
+            axios.post(hst.conf.server + "service/auth/resetPassword?target=" + hst.conf.serverTarget, { email: email }).then(reset => {
+                var res = {
+                    fullName: reset.data.fullName,
+                    url: hst.conf.host + hst.conf.auth.resetPasswordURL + "?token=" + reset.data.token
+                }
+                var message = ejs.render(resetMail, res);
+                hst.conf.mailConfig.auth.pass = cr.AES.encrypt(hst.conf.mailConfig.auth.pass, hst.conf.hstcloud.key).toString();
+                hst.conf.mailConfig.auth.user = cr.AES.encrypt(hst.conf.mailConfig.auth.user, hst.conf.hstcloud.key).toString();
+                var mail = {
+                    subject: "E Mail Sıfırmala",
+                    message: message,
+                    to: email
+                }
+                axios.post(hst.conf.server + "service/mailservice/send", { mail: mail, config: hst.conf.mailConfig }).then(res => {
+                    resolve(res);
                 }).catch(err => {
                     reject(err);
                 });
+            }).catch(err => {
+                reject(err);
             });
         })
     };
@@ -163,7 +156,7 @@ class Auth {
     sendNewPassword(token, password) {
         return new Promise((resolve, reject) => {
             password = cr.AES.encrypt(password, hst.conf.hstcloud.key).toString();
-            axios.post(hst.conf.server + "service/auth/sendNewPassword?target="+hst.conf.serverTarget, { token: token , password : password }).then(reset => {
+            axios.post(hst.conf.server + "service/auth/sendNewPassword?target=" + hst.conf.serverTarget, { token: token, password: password }).then(reset => {
                 resolve(reset.data);
             }).catch(err => {
                 reject(err);

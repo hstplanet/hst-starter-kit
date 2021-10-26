@@ -3,8 +3,8 @@
     <q-form @submit="signUp" class="login">
       <q-card>
         <q-card-section class="bg-white">
-           <router-link to="/">
-            <img src="~/assets/logo.png" height="26px" alt="logo" />
+          <router-link to="/" class="text-h6">
+            <img src="~/assets/logo.png" alt="logo" style="height: 32px" />
           </router-link>
         </q-card-section>
         <q-card-section class="email-panel">
@@ -12,34 +12,29 @@
           <q-input
             color="red"
             dense
-            v-model="auth.attributes.email"
+            v-model="email"
             outlined
             type="email"
             placeholder="E Mail Adresiniz"
             lazy-rules
-            :rules="[
-              (val) =>
-                (val && val.length > 0) || '',
-            ]"
+            :rules="[(val) => (val && val.length > 0) || '']"
           />
           <!-- Şifre -->
           <q-input
             color="red"
             dense
-            v-model="auth.attributes.password"
+            v-model="password"
             outlined
             type="password"
             placeholder="Şifre"
             lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || '',
-            ]"
+            :rules="[(val) => (val && val.length > 0) || '']"
           />
           <!-- Şifre Onay -->
           <q-input
             color="red"
             dense
-            v-model="auth.attributes.confirmPassword"
+            v-model="confirmPassword"
             outlined
             type="password"
             placeholder="Şifre Onay"
@@ -47,36 +42,29 @@
             class="q-mb-md"
             :error="passwordControl"
             lazy-rules
-            :rules="[
-              (val) =>
-                (val && val.length > 0) || '',
-            ]"
+            :rules="[(val) => (val && val.length > 0) || '']"
           />
           <!-- Adınız -->
           <q-input
             color="red"
             dense
-            v-model="auth.attributes.name"
+            v-model="name"
             outlined
             type="text"
             placeholder="Adınız"
             lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || '',
-            ]"
+            :rules="[(val) => (val && val.length > 0) || '']"
           />
           <!-- Soyadınız -->
           <q-input
             color="red"
             dense
-            v-model="auth.attributes.lastname"
+            v-model="lastname"
             outlined
             type="text"
             placeholder="Soyadınız"
             lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || '',
-            ]"
+            :rules="[(val) => (val && val.length > 0) || '']"
           />
           <div class="q-pt-lg">
             Zaten hesabın var mı ?
@@ -91,8 +79,9 @@
           <q-btn
             type="submit"
             style="width: 108px"
-            color="red"
+            color="grey-10"
             label="Kayıt Ol"
+            class="text-capitalize"
           />
         </q-card-section>
       </q-card>
@@ -101,26 +90,31 @@
 </template>
 
 <script>
-import AuthModel from "models/AuthModel";
+import hst from "hst/index";
 export default {
   data() {
     return {
       passwordCheck: false,
-      auth: new AuthModel(),
+      email : "",
+      password : "",
+      confirmPassword : "",
+      name : "",
+      lastname : ""
     };
   },
   methods: {
     signUp() {
-      this.auth.createAccount().then((res) => {
-        this.$router.push("/mailverified");
+      hst.server.auth.createUserWithEmailAndPassword(this.email , this.password).then(res => {
+        hst.server.auth.updateProfile({name : this.name , lastname : this.lastname}).then(res => {
+          this.$router.push("/mailverified");
+          //hst.server.auth.sendEmailVerification().then(res => {})
+        });
       });
     },
   },
   computed: {
     passwordControl() {
-      if (
-        this.auth.attributes.confirmPassword !== this.auth.attributes.password
-      ) {
+      if (this.confirmPassword !== this.password) {
         return true;
       }
       return false;

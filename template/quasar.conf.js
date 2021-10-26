@@ -104,17 +104,7 @@ module.exports = {{#preset.typescript}}configure({{/preset.typescript}}function 
           .use('raw-loader')
           .loader('raw-loader')
           .end()
-      },
-      // https://v1.quasar.dev/quasar-cli/handling-webpack
-      // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
-      {{#preset.typescript}}chainWebpack (/* chain */) {
-        //
-      },{{else}}{{#preset.lint}}chainWebpack (chain) {
-        chain.plugin('eslint-webpack-plugin')
-          .use(ESLintPlugin, [{ extensions: [ 'js', 'vue' ] }])
-      },{{else}}chainWebpack (/* chain */) {
-        //
-      },{{/preset.lint}}{{/preset.typescript}}
+      }
     },
 
     // Full list of options: https://v1.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
@@ -145,6 +135,7 @@ module.exports = {{#preset.typescript}}configure({{/preset.typescript}}function 
       // Quasar plugins
       plugins: [
 	'SessionStorage',
+  'LocalStorage',
         'Notify',
         'Cookies'
 	]

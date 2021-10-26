@@ -7,25 +7,21 @@
 </template>
 
 <script>
-import AuthModel from "models/AuthModel";
+import hst from "hst/index"
 export default {
   data() {
     return {
       view: false,
-      auth: new AuthModel(),
     };
   },
   created() {
     if (this.$route.query.token !== undefined) {
-      this.auth
-        .emailVerification(this.$route.query.token)
-        .then(() => {
-          this.$router.push("/");
-          this.$router.go();
-        })
-        .catch((err) => {
-          console.log("HATA");
-        });
+      hst.server.auth.emailVerification().then(res => {
+        this.$router.push("/");
+      }).catch(err => {
+        console.log(err);
+        console.log("HATA");
+      });
     }
   },
 };
@@ -47,14 +43,6 @@ export default {
       font-size: 1.5rem;
       padding: 0;
       margin-bottom: 12px;
-      font-family: "Segoe UI", "Helvetica Neue", "Lucida Grande", "Roboto",
-        "Ebrima", "Nirmala UI", "Gadugi", "Segoe Xbox Symbol", "Segoe UI Symbol",
-        "Meiryo UI", "Khmer UI", "Tunga", "Lao UI", "Raavi", "Iskoola Pota",
-        "Latha", "Leelawadee", "Microsoft YaHei UI", "Microsoft JhengHei UI",
-        "Malgun Gothic", "Estrangelo Edessa", "Microsoft Himalaya",
-        "Microsoft New Tai Lue", "Microsoft PhagsPa", "Microsoft Tai Le",
-        "Microsoft Yi Baiti", "Mongolian Baiti", "MV Boli", "Myanmar Text",
-        "Cambria Math";
     }
   }
 

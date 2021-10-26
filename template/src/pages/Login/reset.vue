@@ -3,23 +3,20 @@
     <q-form @submit="reset" class="login">
       <q-card>
         <q-card-section class="bg-white">
-           <router-link to="/">
-            <img src="~/assets/logo.png" height="26px" alt="logo" />
+          <router-link to="/" class="text-h6">
+            <img src="~/assets/logo.png" alt="logo" style="height: 32px" />
           </router-link>
         </q-card-section>
         <q-card-section class="email-panel" v-if="!sendResetMail">
           <q-input
             dense
             color="red"
-            v-model="auth.attributes.email"
+            v-model="email"
             type="email"
             outlined
             placeholder="E Mail Adresiniz"
             lazy-rules
-            :rules="[
-              (val) =>
-                (val && val.length > 0) || '',
-            ]"
+            :rules="[(val) => (val && val.length > 0) || '']"
           />
           <div class="q-pt-lg">
             * Şifreni sıfırlaman için sana bir sıfırlama e postası göndereceğiz.
@@ -30,11 +27,29 @@
           </div>
         </q-card-section>
         <q-card-section v-else>
-          <p>Sıfırlama e postası {{ auth.attributes.email }} adresine gönderildi. Lütfen bu adresi kontrol ediniz. Gönderdiğimiz linki kullanarak şifrenizi sıfırlayabilirsiniz.</p>
+          <p>
+            Sıfırlama e postası adresine gönderildi. Lütfen {{email}} bu adresi kontrol
+            ediniz. Gönderdiğimiz linki kullanarak şifrenizi
+            sıfırlayabilirsiniz.
+          </p>
         </q-card-section>
         <q-card-section class="text-right">
-          <q-btn type="submit" style="width: 108px" color="red" label="Sıfırla" v-if="!sendResetMail"/>
-          <q-btn to="/" style="width: 108px" color="red" label="Tamam" v-else/>
+          <q-btn
+            type="submit"
+            class="text-capitalize"
+            style="width: 108px"
+            color="grey-10"
+            label="Sıfırla"
+            v-if="!sendResetMail"
+          />
+          <q-btn
+            to="/"
+            class="text-capitalize"
+            style="width: 108px"
+            color="grey-10"
+            label="Tamam"
+            v-else
+          />
         </q-card-section>
       </q-card>
     </q-form>
@@ -42,17 +57,17 @@
 </template>
 
 <script>
-import AuthModel from "models/AuthModel";
+import hst from "hst/index"
 export default {
   data() {
     return {
-      auth: new AuthModel(),
+      email : "",
       sendResetMail: false,
     };
   },
   methods: {
     reset() {
-      this.auth.resetPassword().then((res) => {
+      hst.server.auth.resetPassword(this.email).then(res => {
         this.sendResetMail = true;
       });
     },
