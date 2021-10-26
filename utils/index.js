@@ -13,10 +13,10 @@ const lintStyles = ['standard', 'airbnb', 'prettier']
 function sortDependencies(data) {
     const pkgFile = path.join(
         data.inPlace ? '' : data.destDirName,
-        'app/package.json'
+        'package.json'
     )
     let sorted = false
-    
+
     const pkg = JSON.parse(fs.readFileSync(pkgFile))
 
     if (pkg.dependencies) {
