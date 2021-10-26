@@ -87,12 +87,24 @@ module.exports = {{#preset.typescript}}configure({{/preset.typescript}}function 
 
       // Options below are automatically set depending on the env, set them if you want to override
       // extractCSS: false,
-	extendWebpack(cfg, { isServer, isClient }) {
-                cfg.resolve.alias = {
-                    ...cfg.resolve.alias,
-                    models: path.resolve(__dirname, './src/models'),
-                }
-            },
+      extendWebpack(cfg, { isServer, isClient }) {
+        cfg.resolve.alias = {
+          ...cfg.resolve.alias,
+          models: path.resolve(__dirname, './src/models'),
+          hst: path.resolve(__dirname, './src/hst'),
+          fxml: path.resolve(__dirname, './src/fxml'),
+        }
+      },
+      // https://v1.quasar.dev/quasar-cli/handling-webpack
+      // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
+      chainWebpack(config) {
+        config.module
+          .rule('raw')
+          .test(/\.ejs$/)
+          .use('raw-loader')
+          .loader('raw-loader')
+          .end()
+      },
       // https://v1.quasar.dev/quasar-cli/handling-webpack
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
       {{#preset.typescript}}chainWebpack (/* chain */) {

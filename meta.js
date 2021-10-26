@@ -75,7 +75,8 @@ module.exports = {
         preset: {
             type: 'checkbox',
             message: 'Check the features needed for your project:',
-            choices: [{
+            choices: [
+                {
                     name: 'ESLint (recommended)',
                     value: 'lint',
                     checked: true
