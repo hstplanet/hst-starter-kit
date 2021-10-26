@@ -13,7 +13,7 @@ const routes = [
                 component: () =>
                     import('pages/Index.vue')
             },
-            {{# preset.loginsystem }}
+            
             // Mail Verified
             {
                 beforeEnter: (to, from, next) => {
@@ -48,10 +48,10 @@ const routes = [
                 component: () =>
                     import('src/pages/Login/OkeMail.vue')
             },
-            {{/ preset.loginsystem }}
+          
         ]
     },
-    {{ #preset.loginsystem }}
+
     // Login
     {
         path: '/login',
@@ -112,7 +112,7 @@ const routes = [
             },
         ]
     },
-    {{/ preset.loginsystem }}
+ 
 
     // Always leave this as last one,
     // but you can also remove it
