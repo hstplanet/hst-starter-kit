@@ -1,4 +1,4 @@
 import Store from "models/index"
 
 
-export default Store
+export default Store;

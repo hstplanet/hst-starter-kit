@@ -1,5 +1,5 @@
 import axios from "axios";
-import hst from "hst/index";
+import HST from "hst/index";
 
 export default class IModel {
 
@@ -10,10 +10,12 @@ export default class IModel {
     }
 
     #getURL() {
+        const hst = new HST();
         return hst.conf.server + "api/general/orm?target=" + hst.conf.serverTarget + "&table=" + this.#model;
     }
 
     find(criteria) {
+        const hst = new HST();
         return new Promise((resolve, reject) => {
             if (criteria === undefined) {
                 criteria = {};
@@ -51,6 +53,7 @@ export default class IModel {
     }
 
     findOne(criteria) {
+        const hst = new HST();
         return new Promise((resolve, reject) => {
             if (criteria === undefined) {
                 criteria = {};
@@ -88,6 +91,7 @@ export default class IModel {
     }
 
     addToCollection(criteria) {
+        const hst = new HST();
         var setFunction = {
             set: (valuesToSet) => {
                 return new Promise((resolve, reject) => {
@@ -129,6 +133,7 @@ export default class IModel {
     }
 
     archive(criteria) {
+        const hst = new HST();
         return new Promise((resolve, reject) => {
             if (criteria === undefined) {
                 reject("Arşiv kriteriniz yok.")
@@ -146,6 +151,7 @@ export default class IModel {
     }
 
     archiveOne(criteria) {
+        const hst = new HST();
         return new Promise((resolve, reject) => {
             if (criteria === undefined) {
                 reject("Arşiv kriteriniz yok.")
@@ -163,6 +169,7 @@ export default class IModel {
     }
 
     archiveFindOne(criteria) {
+        const hst = new HST();
         return new Promise((resolve, reject) => {
             if (criteria === undefined) {
                 criteria = {};
@@ -181,6 +188,7 @@ export default class IModel {
     }
 
     archiveFind(criteria) {
+        const hst = new HST();
         return new Promise((resolve, reject) => {
             if (criteria === undefined) {
                 criteria = {};
@@ -199,6 +207,7 @@ export default class IModel {
     }
 
     avg(attrName, criteria) {
+        const hst = new HST();
         var whereFunction = {
             where: (whereData) => {
                 if (criteria === undefined) {
@@ -225,6 +234,7 @@ export default class IModel {
     }
 
     count(criteria) {
+        const hst = new HST();
         return new Promise((resolve, reject) => {
             if (criteria === undefined) {
                 criteria = {};
@@ -240,8 +250,11 @@ export default class IModel {
         });
     }
 
+
     create() {
+        const hst = new HST();
         var createData = this.#synchronized();
+        var data = {};
         return new Promise((resolve, reject) => {
             axios.post(this.#getURL(), {
                 selector: "create",
@@ -249,7 +262,8 @@ export default class IModel {
                 initialValues: createData,
                 valuesToSet: null
             }).then(res => {
-                resolve(res.data);
+                data = res.data;
+                resolve(data);
             }).catch(err => {
                 reject(err);
             });
@@ -257,6 +271,7 @@ export default class IModel {
     }
 
     destroy(criteria) {
+        const hst = new HST();
         return new Promise((resolve, reject) => {
             if (criteria === undefined) {
                 criteria = {};
@@ -275,6 +290,7 @@ export default class IModel {
     }
 
     destroyOne(criteria) {
+        const hst = new HST();
         return new Promise((resolve, reject) => {
             if (criteria === undefined) {
                 criteria = {};
@@ -293,6 +309,7 @@ export default class IModel {
     }
 
     getDatastore() {
+        const hst = new HST();
         return new Promise((resolve, reject) => {
             axios.post(this.#getURL(), {
                 selector: "getDatastore",
@@ -308,6 +325,7 @@ export default class IModel {
     }
 
     removeFromCollection(criteria) {
+        const hst = new HST();
         var setFunction = {
             set: (valuesToSet) => {
                 return new Promise((resolve, reject) => {
@@ -349,6 +367,7 @@ export default class IModel {
     }
 
     sum(attrName, criteria) {
+        const hst = new HST();
         var whereFunction = {
             where: (whereData) => {
                 if (criteria === undefined) {
@@ -375,6 +394,7 @@ export default class IModel {
     }
 
     update(criteria) {
+        const hst = new HST();
         var updateData = this.#synchronized();
         return new Promise((resolve, reject) => {
             if (criteria === undefined) {
@@ -395,6 +415,7 @@ export default class IModel {
     }
 
     validate(attrName, value) {
+        const hst = new HST();
         return new Promise((resolve, reject) => {
             if (value === undefined) {
                 value = {};

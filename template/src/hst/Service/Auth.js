@@ -1,5 +1,5 @@
 import axios from "axios";
-import hst from "hst/index";
+import HST from "hst/index";
 import ejs from "ejs";
 import register from "pages/Mail/Register.ejs";
 import resetMail from "pages/Mail/Reset.ejs"
@@ -8,6 +8,7 @@ import cr from 'crypto-js';
 class Auth {
 
     onAuthStateChanged() {
+        const hst = new HST();
         return new Promise((resolve, reject) => {
             axios.post(hst.conf.server + "service/auth/onAuthStateChanged?target=" + hst.conf.serverTarget, { token: hst.util.LocalStorage.getItem("auth") }).then(user => {
                 if (user.data.err !== undefined && user.data.err) {
@@ -22,6 +23,7 @@ class Auth {
     };
 
     signInWithEmailAndPassword(email, password) {
+        const hst = new HST();
         return new Promise((resolve, reject) => {
             axios.post(hst.conf.server + "service/auth/signin?target=" + hst.conf.serverTarget, { emailAddress: email, password: password }).then(token => {
                 if (token.data.err !== undefined && token.data.err) {
@@ -46,6 +48,7 @@ class Auth {
     };
 
     createUserWithEmailAndPassword(email, password) {
+        const hst = new HST();
         return new Promise((resolve, reject) => {
             axios.post(hst.conf.server + "service/auth/signup?target=" + hst.conf.serverTarget, { emailAddress: email, password: password, auth: hst.conf.auth }).then(token => {
                 if (token.data.err !== undefined && token.data.err) {
@@ -75,6 +78,7 @@ class Auth {
     };
 
     updateProfile(update) {
+        const hst = new HST();
         return new Promise((resolve, reject) => {
             update.token = hst.util.LocalStorage.getItem("auth");
             axios.post(hst.conf.server + "service/auth/update?target=" + hst.conf.serverTarget, update).then(res => {
@@ -88,6 +92,7 @@ class Auth {
     };
 
     sendEmailVerification() {
+        const hst = new HST();
         return new Promise((resolve, reject) => {
             this.onAuthStateChanged().then(user => {
                 var res = {
@@ -107,6 +112,7 @@ class Auth {
     };
 
     logout() {
+        const hst = new HST();
         return new Promise((resolve, reject) => {
             axios.post(hst.conf.server + "service/auth/logout?target=" + hst.conf.serverTarget, { token: hst.util.LocalStorage.getItem("auth") }).then(logout => {
                 hst.util.LocalStorage.remove("auth");
@@ -118,6 +124,7 @@ class Auth {
     };
 
     emailVerification() {
+        const hst = new HST();
         return new Promise((resolve, reject) => {
             axios.post(hst.conf.server + "service/auth/emailVerification?target=" + hst.conf.serverTarget, { token: hst.util.LocalStorage.getItem("auth") }).then(verification => {
                 resolve(verification.data);
@@ -128,6 +135,7 @@ class Auth {
     };
 
     resetPassword(email) {
+        const hst = new HST();
         return new Promise((resolve, reject) => {
             axios.post(hst.conf.server + "service/auth/resetPassword?target=" + hst.conf.serverTarget, { email: email }).then(reset => {
                 var res = {
@@ -154,6 +162,7 @@ class Auth {
     };
 
     sendNewPassword(token, password) {
+        const hst = new HST();
         return new Promise((resolve, reject) => {
             password = cr.AES.encrypt(password, hst.conf.hstcloud.key).toString();
             axios.post(hst.conf.server + "service/auth/sendNewPassword?target=" + hst.conf.serverTarget, { token: token, password: password }).then(reset => {

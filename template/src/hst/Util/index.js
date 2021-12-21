@@ -1,4 +1,5 @@
 import { date, uid, Notify, LocalStorage, SessionStorage, LoadingBar } from "quasar";
+import CityTown from "./CityTown";
 
 class Util {
 
@@ -10,6 +11,7 @@ class Util {
     LoadingBar = LoadingBar;
     email() { };
     math() { };
+    location = CityTown
 
 }
 
