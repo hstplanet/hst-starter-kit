@@ -20,8 +20,14 @@ export default Vue.extend({
 </script>
 {{else}}
 <script>
+import hst from "hst/index";
 export default {
-  name: 'App'
+  name: 'App',
+  created() {
+    new hst().util.init.initializeApp({
+      store: this.$store,
+    });
+  },
 }
 </script>
 {{/if}}

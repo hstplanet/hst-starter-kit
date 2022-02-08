@@ -1,18 +1,26 @@
-import { date, uid, Notify, LocalStorage, SessionStorage, LoadingBar } from "quasar";
+import { date , uid, Notify, LocalStorage, SessionStorage, LoadingBar } from "quasar";
 import CityTown from "./CityTown";
-import Currency from "./Currency"
+import Local from "./Local";
+import EmailSender from "./Email";
+import HSTDate from "./HSTDate"
+import IP from "./IP"
+import Init from "./Init"
+
 class Util {
 
-    date = date;
+    //date = date;
+    date = HSTDate;
     uid = uid;
     notify = Notify;
     LocalStorage = LocalStorage;
     SessionStorage = SessionStorage;
     LoadingBar = LoadingBar;
-    email() { };
+    email = EmailSender;
     math() { };
-    location = CityTown;
-    currency = new Currency();
+    location = CityTown
+    local = Local
+    ip = IP;
+    init = new Init();
 
 }
 

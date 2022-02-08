@@ -3,7 +3,7 @@ import IModel from 'hst/Intefaces/IModel';
 export default class User extends IModel {
 
     constructor() {
-        super("User");
+        super("User" /*isStore*/);
     }
 
     attributes = {

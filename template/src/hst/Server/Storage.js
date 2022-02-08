@@ -9,6 +9,7 @@ class Storage {
             hst.server.auth.onAuthStateChanged().then(user => {
                 var formData = new FormData();
                 formData.set("avatar", file);
+                formData.set("serverURL", "Deneme");
                 axios.post(hst.conf.server + "service/storage/upload/" + user.id, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'

@@ -1,4 +1,4 @@
-import Server from "hst/Service";
+import Server from "hst/Server";
 import Util from "hst/Util";
 import conf from "app/hst.conf";
 

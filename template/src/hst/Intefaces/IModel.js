@@ -4,14 +4,22 @@ import HST from "hst/index";
 export default class IModel {
 
     #model = "";
+    #isStore = false;
 
-    constructor(model) {
+    constructor(model, isStore) {
         this.#model = model;
+        if (isStore) {
+            this.#isStore = isStore;
+        }
     }
 
     #getURL() {
         const hst = new HST();
         return hst.conf.server + "api/general/orm?target=" + hst.conf.serverTarget + "&table=" + this.#model;
+    }
+
+    setData(data) {
+        this.attributes = data
     }
 
     find(criteria) {
@@ -48,6 +56,9 @@ export default class IModel {
                     }
                 });
                 resolve(this.attributes);
+                if (document.store && this.#isStore) {
+                    document.store.dispatch(this.#model.toLowerCase() + "/setData", this.attributes)
+                }
             });
         });
     }
@@ -249,7 +260,6 @@ export default class IModel {
             });
         });
     }
-
 
     create() {
         const hst = new HST();
